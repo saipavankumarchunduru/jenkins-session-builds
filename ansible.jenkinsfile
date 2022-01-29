@@ -11,6 +11,9 @@ pipeline {
 					steps {
 					script {	
 						sh '''
+						echo "remove old hosts file"
+						rm -rf ${WORKSPACE}/hosts
+						
 						echo "Copying parameters to host file"
 						echo ${Hostname} >> ${WORKSPACE}/hosts;
 						'''
