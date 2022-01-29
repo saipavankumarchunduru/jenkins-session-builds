@@ -18,6 +18,6 @@ provisioner "file" {
 connection {
   host = self.public_ip
   user = "ec2-user"
-  private_key = file("/vagrant/Hands-on/3-pipeline-build/2-terraform/3-terraform-git/master_key.pem")    
+  private_key = file("/vagrant/keys/master_key.pem")    
   }
 }
