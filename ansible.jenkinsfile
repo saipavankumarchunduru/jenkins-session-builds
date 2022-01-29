@@ -11,9 +11,6 @@ pipeline {
 					steps {
 					script {	
 						sh '''
-						# workspace clean up
-						rm -rf ${WORKSPACE}/*
-
 						echo "Copying parameters to host file"
 						echo ${Hostname} >> ${WORKSPACE}/hosts;
 						'''
