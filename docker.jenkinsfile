@@ -22,7 +22,7 @@ pipeline {
 					script {
 						sh '''
 						echo "Executing docker file"
-						cd ${WORKSPACE}/ && sudo docker build -t '''+env_image+''':'''+env_tag+''' .
+						cd ${WORKSPACE}/docker/ && sudo docker build -t '''+env_image+''':'''+env_tag+''' .
 						'''
 						}
 					}
