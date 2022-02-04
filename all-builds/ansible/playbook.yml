@@ -18,7 +18,7 @@
           mode: '0777'
       - name: Copy jar file to target machine
         copy:
-          src: /tmp/target/*
+          src: target/
           dest: /tmp/
           owner: ec2-user
           group: root
