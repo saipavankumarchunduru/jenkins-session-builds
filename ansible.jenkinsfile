@@ -17,18 +17,6 @@ pipeline {
 						}
 					}
 				}
-
-			stage("Prepare build environment") {
-				steps {
-					script {
-						sh '''	
-						echo "Preparing build workspace"
-						# copy files 
-						cp -r /vagrant/Hands-on/3-pipeline-build/3-ansible/2-ansible-parameterized/* ${WORKSPACE}/
-						'''
-					}
-				}
-			}
 			
 			stage("Ansible") {
 				steps {
