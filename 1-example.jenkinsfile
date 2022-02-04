@@ -26,7 +26,7 @@ pipeline {
 						echo "Build java artifact"
 						cd ${WORKSPACE}/all-builds/maven/ && mvn package
 						echo "Copy built artifact"
-						cp -r ${WORKSPACE}/all-builds/maven/target /tmp/
+						cp -r ${WORKSPACE}/all-builds/maven/target ${WORKSPACE}/all-builds/ansible/
 						'''
 						}
 					}
