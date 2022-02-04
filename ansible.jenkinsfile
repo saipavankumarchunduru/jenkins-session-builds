@@ -11,9 +11,6 @@ pipeline {
 					steps {
 					script {	
 						sh '''
-						echo "remove old hosts file"
-						rm -rf ${WORKSPACE}/hosts
-						
 						echo "Copying parameters to host file"
 						echo ${Hostname} >> ${WORKSPACE}/hosts;
 						'''
@@ -21,12 +18,24 @@ pipeline {
 					}
 				}
 
+			stage("Prepare build environment") {
+				steps {
+					script {
+						sh '''	
+						echo "Preparing build workspace"
+						# copy files 
+						cp -r /vagrant/Hands-on/3-pipeline-build/3-ansible/2-ansible-parameterized/* ${WORKSPACE}/
+						'''
+					}
+				}
+			}
+			
 			stage("Ansible") {
 				steps {
 					script {
 						sh '''
 						echo "Executing playbook"
-						sudo ansible-playbook ${WORKSPACE}/Ansible/httpd.yml -i hosts --key-file "/vagrant/keys/master_key.pem"
+						sudo ansible-playbook ${WORKSPACE}/httpd.yml -i hosts --key-file "/vagrant/keys/master_key.pem"
 						'''
 						}
 					}
