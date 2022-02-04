@@ -1,0 +1,87 @@
+pipeline {
+	agent any
+		stages {
+
+			stage("Generic Inputs") {
+				input {
+					message "Select what task you want to perform ?"
+					parameters {
+						booleanParam(defaultValue: 'false', description: 'create', name: 'create')
+						booleanParam(defaultValue: 'false', description: 'destroy', name: 'destroy')
+						}
+					}
+					steps {
+					script {	
+						env_build = "${create}"
+						env_clean = "${destroy}"
+						}
+					}
+				}
+
+			stage("Maven-build") {
+				steps {
+					script {
+						if (env_build == 'true') {
+						sh '''
+						echo "Build java artifact"
+						cd ${WORKSPACE}/all-builds/maven/ && mvn package
+						echo "Copy built artifact"
+						cp -r ${WORKSPACE}/all-builds/maven/target /tmp/
+						'''
+						}
+					}
+				}
+			}
+
+			stage("Maven-clean") {
+				steps {
+					script {
+						if (env_clean == 'true') {
+						sh '''
+						echo "Build java artifact"
+						cd ${WORKSPACE}/all-builds/maven/ && mvn clean
+						'''
+						}
+					}
+				}
+			}
+
+
+            stage("Terraform-create") {
+				steps {
+					script {
+						if (env_build == 'true') {
+						sh '''
+						echo "Creating instance"
+						cd ${WORKSPACE}/all-builds/terraform/ && terraform init && terraform apply -auto-approve -lock=false
+						'''
+						}
+					}
+				}
+			}
+
+			stage("Terraform-destroy") {
+				steps {
+					script {
+						if (env_destroy == 'true') {
+						sh '''
+						echo "Destroy instance"
+						cd ${WORKSPACE}/all-builds/terraform/ && terraform init && terraform destroy -auto-approve -lock=false
+						'''
+						}
+					}
+				}
+            }
+
+            stage("Ansible") {
+				steps {
+					script {
+						sh '''
+						echo "Executing playbook"
+						sudo ansible-playbook ${WORKSPACE}/all-builds/ansible/playbook.yml -i hosts --key-file "/vagrant/keys/master_key.pem"
+						'''
+						}
+					}
+				}
+            }
+        }
