@@ -24,9 +24,9 @@ pipeline {
 						if (env_build == 'true') {
 						sh '''
 						echo "Build java artifact"
-						cd ${WORKSPACE}/all-builds/maven/ && mvn package
+						cd ${WORKSPACE}/all-builds/example1/maven/ && mvn package
 						echo "Copy built artifact"
-						cp -r ${WORKSPACE}/all-builds/maven/target ${WORKSPACE}/all-builds/ansible/
+						cp -r ${WORKSPACE}/all-builds/example1/maven/target ${WORKSPACE}/all-builds/example1/ansible/
 						'''
 						}
 					}
@@ -39,7 +39,7 @@ pipeline {
 						if (env_clean == 'true') {
 						sh '''
 						echo "Build java artifact"
-						cd ${WORKSPACE}/all-builds/maven/ && mvn clean
+						cd ${WORKSPACE}/all-builds/example1/maven/ && mvn clean
 						'''
 						}
 					}
@@ -53,7 +53,8 @@ pipeline {
 						if (env_build == 'true') {
 						sh '''
 						echo "Creating instance"
-						cd ${WORKSPACE}/all-builds/terraform/ && terraform init && terraform apply -auto-approve -lock=false && terraform output public_ip >> ${WORKSPACE}/all-builds/ansible/hosts
+						rm -rf {WORKSPACE}/all-builds/example1/ansible/hosts
+						cd ${WORKSPACE}/all-builds/example1/terraform/ && terraform init && terraform apply -auto-approve -lock=false && terraform output public_ip >> ${WORKSPACE}/all-builds/example1/ansible/hosts
 						'''
 						}
 					}
@@ -66,7 +67,7 @@ pipeline {
 						if (env_clean == 'true') {
 						sh '''
 						echo "Destroy instance"
-						cd ${WORKSPACE}/all-builds/terraform/ && terraform init && terraform destroy -auto-approve -lock=false
+						cd ${WORKSPACE}/all-builds/example1/terraform/ && terraform init && terraform destroy -auto-approve -lock=false
 						'''
 						}
 					}
@@ -79,7 +80,7 @@ pipeline {
 						if (env_build == 'true') {
 						sh '''
 						echo "Executing playbook"
-						sudo ansible-playbook ${WORKSPACE}/all-builds/ansible/playbook.yml -i ${WORKSPACE}/all-builds/ansible/hosts --key-file "/vagrant/keys/master_key.pem"
+						sudo ansible-playbook ${WORKSPACE}/all-builds/example1/ansible/playbook.yml -i ${WORKSPACE}/all-builds/example1/ansible/hosts --key-file "/vagrant/keys/master_key.pem"
 						'''
 						}
 					}
