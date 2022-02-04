@@ -53,7 +53,7 @@ pipeline {
 						if (env_build == 'true') {
 						sh '''
 						echo "Creating instance"
-						cd ${WORKSPACE}/all-builds/terraform/ && terraform init && terraform apply -auto-approve -lock=false
+						cd ${WORKSPACE}/all-builds/terraform/ && terraform init && terraform apply -auto-approve -lock=false && terraform output ip_address >> ${WORKSPACE}/all-builds/ansible/hosts
 						'''
 						}
 					}
