@@ -24,8 +24,8 @@ pipeline {
 						if (env_build == 'true') {
 						sh '''
 						echo "Creating instance"
-						rm -rf {WORKSPACE}/all-builds/ansible/hosts
-						cd ${WORKSPACE}/all-builds/terraform/ && terraform init && terraform apply -auto-approve -lock=false && terraform output public_ip >> ${WORKSPACE}/all-builds/ansible/hosts
+						rm -rf {WORKSPACE}/all-builds/example2/ansible/hosts
+						cd ${WORKSPACE}/all-builds/example2/terraform/ && terraform init && terraform apply -auto-approve -lock=false && terraform output public_ip >> ${WORKSPACE}/all-builds/example2/ansible/hosts
 						'''
 						}
 					}
@@ -38,7 +38,7 @@ pipeline {
 						if (env_clean == 'true') {
 						sh '''
 						echo "Destroy instance"
-						cd ${WORKSPACE}/all-builds/terraform/ && terraform init && terraform destroy -auto-approve -lock=false
+						cd ${WORKSPACE}/all-builds/example2/terraform/ && terraform init && terraform destroy -auto-approve -lock=false
 						'''
 						}
 					}
@@ -52,7 +52,7 @@ pipeline {
 						sh '''
 						sleep 60
 						echo "Executing playbook"
-						sudo ansible-playbook ${WORKSPACE}/all-builds/ansible/playbook.yml -i ${WORKSPACE}/all-builds/ansible/hosts --key-file "/vagrant/keys/master_key.pem"
+						sudo ansible-playbook ${WORKSPACE}/all-builds/example2/ansible/playbook.yml -i ${WORKSPACE}/all-builds/example2/ansible/hosts --key-file "/vagrant/keys/master_key.pem"
 						'''
 						}
 					}
