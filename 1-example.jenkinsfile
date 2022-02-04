@@ -76,6 +76,7 @@ pipeline {
             stage("Ansible") {
 				steps {
 					script {
+						if (env_build == 'true') {
 						sh '''
 						echo "Executing playbook"
 						sudo ansible-playbook ${WORKSPACE}/all-builds/ansible/playbook.yml -i ${WORKSPACE}/all-builds/ansible/hosts --key-file "/vagrant/keys/master_key.pem"
@@ -85,3 +86,4 @@ pipeline {
 				}
             }
         }
+	}
