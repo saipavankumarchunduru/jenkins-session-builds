@@ -63,7 +63,7 @@ pipeline {
 			stage("Terraform-destroy") {
 				steps {
 					script {
-						if (env_destroy == 'true') {
+						if (env_clean == 'true') {
 						sh '''
 						echo "Destroy instance"
 						cd ${WORKSPACE}/all-builds/terraform/ && terraform init && terraform destroy -auto-approve -lock=false
