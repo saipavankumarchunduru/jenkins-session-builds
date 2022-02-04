@@ -78,7 +78,7 @@ pipeline {
 					script {
 						sh '''
 						echo "Executing playbook"
-						sudo ansible-playbook ${WORKSPACE}/all-builds/ansible/playbook.yml -i hosts --key-file "/vagrant/keys/master_key.pem"
+						sudo ansible-playbook ${WORKSPACE}/all-builds/ansible/playbook.yml -i ${WORKSPACE}/all-builds/ansible/hosts --key-file "/vagrant/keys/master_key.pem"
 						'''
 						}
 					}
