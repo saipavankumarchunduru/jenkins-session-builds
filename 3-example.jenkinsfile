@@ -65,8 +65,8 @@ pipeline {
 						if (env_build == 'true') {
 						sh '''
 						ip=`cat ${WORKSPACE}/all-builds/example3/ansible/hosts | tr -d '"'`
-						ssh -i /vagrant/keys/master_key.pem ssh -o StrictHostKeyChecking=no ubuntu@$ip "sudo docker pull httpd"
-						ssh -i /vagrant/keys/master_key.pem ssh -o StrictHostKeyChecking=no ubuntu@$ip "sudo docker run -t -d -p 80:80 --name myhost httpd"
+						ssh -i /vagrant/keys/master_key.pem -o StrictHostKeyChecking=no ubuntu@$ip "sudo docker pull httpd"
+						ssh -i /vagrant/keys/master_key.pem -o StrictHostKeyChecking=no ubuntu@$ip "sudo docker run -t -d -p 80:80 --name myhost httpd"
 						'''
 						}
 					}
