@@ -15,13 +15,9 @@
           state: present
       - name: Update apt and install docker-ce
         apt: update_cache=yes name=docker-ce state=present
-      - name: docker-compose install
-        shell: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-      - name: change docker-compose privilage
-        shell: chmod +x /usr/local/bin/docker-compose
-      - name: create link file
-        shell: ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-      - name: compose file copy
-        copy: 
-          src: docker-compose.yml
-          dest: /tmp
+      - name: Create default containers
+        docker_container:
+          name: mywebserver
+          image: httpd
+          state: present
+        with_sequence: count=1
