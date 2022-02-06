@@ -64,9 +64,8 @@ pipeline {
 					script {
 						if (env_build == 'true') {
 						sh '''
-						sleep 60
 						echo "Executing compose file"
-						sudo cd ${WORKSPACE}/all-builds/example3/docker && docker-compose up -d"
+						sudo cd ${WORKSPACE}/all-builds/example3/docker && docker-compose up -d
 						'''
 						}
 					}
