@@ -18,13 +18,3 @@
           state: present
       - name: Update apt and install docker-ce
         apt: update_cache=yes name=docker-ce state=present
-      - name: Pull default Docker image
-        docker_image:
-          name: httpd
-          source: pull
-      - name: Create default containers
-        docker_container:
-          name: mywebserver
-          image: httpd
-          state: present
-        with_sequence: count=1
