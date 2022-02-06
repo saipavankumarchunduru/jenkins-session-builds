@@ -45,7 +45,7 @@ pipeline {
 				}
             }
 
-                 stage("Ansible") {
+                       stage("Ansible") {
 				steps {
 					script {
 						if (env_build == 'true') {
@@ -58,5 +58,17 @@ pipeline {
 					}
 				}
             }
+
+			stage("Docker") {
+				steps {
+					script {
+						if (env_build == 'true') {
+						ip=`cat ${WORKSPACE}/all-builds/example3/ansible/hosts`
+						ssh -i master_key.pem ubuntu@$ip "sudo docker pull httpd"
+						ssh -i master_key.pem ubuntu@$ip "sudo docker run -t -d -p 80:80 --name myhost httpd"
+						}
+					}
+				}
+			}
 		}
 	}
