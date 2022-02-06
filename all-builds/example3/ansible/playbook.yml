@@ -21,3 +21,7 @@
         shell: chmod +x /usr/local/bin/docker-compose
       - name: create link file
         shell: ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+      - name: compose file copy
+        copy: 
+          src: docker-compose.yml
+          dest: /tmp
