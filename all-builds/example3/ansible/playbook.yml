@@ -6,7 +6,7 @@
     ignore_errors: true
     tasks: 
       - name: Install required system packages
-        apt: name={{ item }} state=latest update_cache=yes
+        apt: name={{ item }} state=presente update_cache=yes
         loop:
           - apt-transport-https
           - ca-certificates
@@ -22,4 +22,4 @@
           repo: deb https://download.docker.com/linux/ubuntu bionic stable
           state: present
       - name: Update apt and install docker-ce
-        apt: update_cache=yes name=docker-ce state=latest
+        apt: update_cache=yes name=docker-ce state=present
