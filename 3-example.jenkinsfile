@@ -64,8 +64,7 @@ pipeline {
 					script {
 						if (env_build == 'true') {
 						sh '''
-						cd {WORKSPACE}/all-builds/example3/ansible/ && sed -i 's/"//g' hosts
-						ip=`cat ${WORKSPACE}/all-builds/example3/ansible/hosts`
+						ip=`cat ${WORKSPACE}/all-builds/example3/ansible/hosts | tr -d '"'`
 						ssh -i /vagrant/keys/master_key.pem ubuntu@$ip "sudo docker pull httpd"
 						ssh -i /vagrant/keys/master_key.pem ubuntu@$ip "sudo docker run -t -d -p 80:80 --name myhost httpd"
 						'''
