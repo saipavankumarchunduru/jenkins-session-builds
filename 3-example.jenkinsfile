@@ -24,7 +24,7 @@ pipeline {
 						if (env_build == 'true') {
 						sh '''
 						echo "Creating instance"
-						rm -rf {WORKSPACE}/all-builds/example3/ansible/hosts
+						rm -rf {WORKSPACE}/*
 						cd ${WORKSPACE}/all-builds/example3/terraform/ && terraform init && terraform apply -auto-approve -lock=false && terraform output public_ip >> ${WORKSPACE}/all-builds/example3/ansible/hosts
 						'''
 						}
@@ -64,6 +64,7 @@ pipeline {
 					script {
 						if (env_build == 'true') {
 						sh '''
+						sed -i 's/"//g' {WORKSPACE}/all-builds/example3/ansible/hosts
 						ip=`cat ${WORKSPACE}/all-builds/example3/ansible/hosts`
 						ssh -i /vagrant/keys/master_key.pem ubuntu@$ip "sudo docker pull httpd"
 						ssh -i /vagrant/keys/master_key.pem ubuntu@$ip "sudo docker run -t -d -p 80:80 --name myhost httpd"
