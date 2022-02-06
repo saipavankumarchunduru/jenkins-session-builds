@@ -1,8 +1,0 @@
-version: "3.9"  # optional since v1.27.0
-services:
-    Master:
-        image: "vijayprabhu04/my-httpd-image-1.0:latest"
-        container_name: master
-        hostname: master
-        ports:             # port mapping
-            - "8080:80"
