@@ -50,7 +50,7 @@ pipeline {
 					script {
 						if (env_build == 'true') {
 						sh '''
-						sleep 60
+						sleep 10
 						echo "Executing playbook"
 						sudo ansible-playbook ${WORKSPACE}/all-builds/example2/ansible/playbook.yml -i ${WORKSPACE}/all-builds/example2/ansible/hosts --key-file "/vagrant/keys/master_key.pem"
 						'''
