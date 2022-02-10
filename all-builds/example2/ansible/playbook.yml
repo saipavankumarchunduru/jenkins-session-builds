@@ -5,7 +5,9 @@
     gather_facts: no
     ignore_errors: true
     tasks: 
-      - name: Install httpd package
+      - name: apt package update
+        shell: apt update
+      - name: Install apache package
         apt:
           name: apache2 
           state: present
@@ -16,7 +18,7 @@
           owner: ubuntu
           group: root
           mode: '0777'
-      - name: Start httpd service
+      - name: Start apache service
         service: 
           name: apache2
           state: started
