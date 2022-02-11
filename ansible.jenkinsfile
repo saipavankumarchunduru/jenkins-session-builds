@@ -23,7 +23,7 @@ pipeline {
 					script {
 						sh '''
 						echo "Executing playbook"
-						sudo ansible-playbook ${WORKSPACE}/httpd.yml -i hosts --key-file "/vagrant/keys/master_key.pem"
+						sudo ansible-playbook ${WORKSPACE}/apache2.yml -i hosts --key-file "/vagrant/keys/master_key.pem"
 						'''
 						}
 					}
